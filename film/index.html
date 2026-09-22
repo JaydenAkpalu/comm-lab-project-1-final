@@ -19,28 +19,29 @@
   </nav>
 
   <div class="film-intro">
-    <p>Staircase layout preview. Not interactive yet.</p>
+    <p>Testing chapter locking with a temporary Next button (drag comes in the next step).</p>
   </div>
 
-  <!-- Plain video tag for now, full native controls, no chapter locking yet -->
   <div class="video-box">
-    <video src="../assets/film.mp4" controls preload="auto"></video>
+    <video id="film" src="../assets/film.mp4" controls preload="auto"></video>
     <p id="chapter-label" class="chapter-label">Chapter I: Chosen</p>
+    <p id="instructions" class="instructions">Press play to watch the first chapter.</p>
+    <!-- Temporary: real dragging replaces this button in the next step -->
+    <button id="next-btn" style="margin-top: 10px;">Next chapter (temporary)</button>
   </div>
 
-  <!-- Static staircase. The plate's position is hardcoded here for now. -->
   <div id="stairs" class="stairs">
-    <div class="step" style="left:20px; top:90px;">I</div>
-    <div class="step" style="left:140px; top:160px;">II</div>
-    <div class="step" style="left:260px; top:230px;">III</div>
-    <div class="step" style="left:380px; top:300px;">IV</div>
-    <div class="step" style="left:500px; top:370px;">V</div>
-    <div class="step" style="left:620px; top:440px;">VI</div>
+    <div class="step" id="step-0"></div>
+    <div class="step" id="step-1"></div>
+    <div class="step" id="step-2"></div>
+    <div class="step" id="step-3"></div>
+    <div class="step" id="step-4"></div>
+    <div class="step" id="step-5"></div>
 
     <img id="bin" class="bin" src="../assets/bin.jpg" alt="The general waste bin at D2">
-    <img id="plate" class="plate" src="../assets/plate.png" alt="A plate of food"
-         style="left: 50px; top: 12px;">
+    <img id="plate" class="plate" src="../assets/plate.png" alt="A plate of food">
   </div>
 
+  <script src="../script.js"></script>
 </body>
 </html>
