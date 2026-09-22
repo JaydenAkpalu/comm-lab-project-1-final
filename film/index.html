@@ -17,6 +17,18 @@
     <a href="../film/" class="current">Film</a>
     <a href="../team/">Team</a>
   </nav>
+
+  <!-- Ready screen. Covers the page until the visitor presses Begin.
+       This is the only place the rules are explained. -->
+  <div id="intro" class="intro show">
+    <h1>You are the food.</h1>
+    <p class="intro-rules">
+      Watch each chapter below. Once it ends, drag the plate<br>
+      down to the next step. There is no going back.
+    </p>
+    <button id="begin-button" class="button">Begin</button>
+  </div>
+
   <!-- One video for the whole film. script.js only lets it play one chapter at a time. -->
   <div class="video-box">
     <video id="film" src="../assets/film.mp4" controls preload="auto"></video>

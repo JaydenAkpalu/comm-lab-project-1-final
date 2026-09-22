@@ -40,6 +40,8 @@ const plate = document.getElementById("plate");
 const bin = document.getElementById("bin");
 const ending = document.getElementById("ending");
 const watchAgainButton = document.getElementById("watch-again");
+const intro = document.getElementById("intro");
+const beginButton = document.getElementById("begin-button");
 
 const steps = [];
 for (let i = 0; i < 6; i++) {
@@ -276,6 +278,16 @@ watchAgainButton.addEventListener("click", function () {
 });
 
 
+// ---------- Ready screen ----------
+// The visitor must press Begin before anything plays. This is also
+// the only place the rules of the staircase are explained.
+beginButton.addEventListener("click", function () {
+  intro.classList.add("hide");
+  startChapter(0, true);
+});
+
 
 // ---------- Start ----------
+// Set up chapter 1, but do not play it yet. Playback starts once
+// the visitor presses Begin on the ready screen above.
 startChapter(0, false);
