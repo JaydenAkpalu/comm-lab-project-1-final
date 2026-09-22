@@ -14,20 +14,17 @@
 
   <nav class="navbar">
     <a href="../">Home</a>
-    <a href="./" class="current">Film</a>
+    <a href="../film/" class="current">Film</a>
     <a href="../team/">Team</a>
   </nav>
-
-  <div class="film-intro">
-    <p>Real dragging is in now. Mood shift and the bin ending come in the next step.</p>
-  </div>
-
+  <!-- One video for the whole film. script.js only lets it play one chapter at a time. -->
   <div class="video-box">
     <video id="film" src="../assets/film.mp4" controls preload="auto"></video>
     <p id="chapter-label" class="chapter-label">Chapter I: Chosen</p>
     <p id="instructions" class="instructions">Press play to watch the first chapter.</p>
   </div>
 
+  <!-- The staircase. Each step is one chapter. The bin waits at the bottom. -->
   <div id="stairs" class="stairs">
     <div class="step" id="step-0"></div>
     <div class="step" id="step-1"></div>
@@ -37,7 +34,15 @@
     <div class="step" id="step-5"></div>
 
     <img id="bin" class="bin" src="../assets/bin.jpg" alt="The general waste bin at D2" draggable="false">
+
+    <!-- draggable="false" stops the browser's own image dragging so our code can move it -->
     <img id="plate" class="plate" src="../assets/plate.png" alt="A plate of food" draggable="false">
+  </div>
+
+  <!-- Ending screen. Hidden until the plate goes into the bin. -->
+  <div id="ending" class="ending">
+    <p class="ending-caption">Don't waste me.<br>Please eat me.</p>
+    <button id="watch-again" class="button">Watch again</button>
   </div>
 
   <script src="../script.js"></script>
