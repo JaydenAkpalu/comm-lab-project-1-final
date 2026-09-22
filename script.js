@@ -1,8 +1,9 @@
 /* =========================================================
-   script.js — Step 3
-   Chapter data, video locking, and step display.
-   The plate moves when the temporary Next button is used;
-   real dragging is added in the next step.
+   script.js — Step 4
+   Same chapter locking as before, but the plate now moves
+   by real mouse dragging instead of a button.
+   Only moves between the 6 chapter steps for now — dropping
+   on the bin after the last chapter is added in the next step.
    ========================================================= */
 
 const chapters = [
@@ -20,7 +21,7 @@ const video = document.getElementById("film");
 const chapterLabel = document.getElementById("chapter-label");
 const instructions = document.getElementById("instructions");
 const plate = document.getElementById("plate");
-const nextButton = document.getElementById("next-btn");
+const stairs = document.getElementById("stairs");
 
 const steps = [];
 for (let i = 0; i < 6; i++) {
@@ -29,6 +30,9 @@ for (let i = 0; i < 6; i++) {
 
 let currentChapter = 0;
 let isUnlocked = false;
+let isDragging = false;
+let grabX = 0;
+let grabY = 0;
 
 function placePlateOnStep(index) {
   const step = steps[index];
@@ -52,20 +56,9 @@ function updateSteps() {
   }
 }
 
-function startChapter(index, playNow) {
-  currentChapter = index;
+function lockPlate() {
   isUnlocked = false;
-  updateSteps();
-  placePlateOnStep(index);
-  chapterLabel.textContent = chapters[index].title;
-  video.currentTime = chapters[index].start;
-
-  if (playNow) {
-    video.play();
-    instructions.textContent = "Keep watching. The button unlocks when this chapter ends.";
-  } else {
-    instructions.textContent = "Press play to watch the first chapter.";
-  }
+  plate.classList.remove("unlocked");
 }
 
 function unlockPlate() {
@@ -73,20 +66,38 @@ function unlockPlate() {
     return;
   }
   isUnlocked = true;
-  instructions.textContent = "Chapter over. Press the button to move to the next chapter.";
+  plate.classList.add("unlocked");
+  if (currentChapter === chapters.length - 1) {
+    instructions.textContent = "End of chapter 6. Bin interaction isn't built yet.";
+  } else {
+    instructions.textContent = "Chapter over. Drag the plate down one step.";
+  }
+}
+
+function startChapter(index, playNow) {
+  currentChapter = index;
+  lockPlate();
+  updateSteps();
+  placePlateOnStep(index);
+  chapterLabel.textContent = chapters[index].title;
+  video.currentTime = chapters[index].start;
+
+  if (playNow) {
+    video.play();
+    instructions.textContent = "Keep watching. The plate can't move until this chapter ends.";
+  } else {
+    instructions.textContent = "Press play to watch the first chapter.";
+  }
 }
 
 function checkVideoTime() {
   const chapter = chapters[currentChapter];
-
   if (video.currentTime < chapter.start - 0.5) {
     video.currentTime = chapter.start;
   }
-
   if (chapter.end === null) {
     return;
   }
-
   if (video.currentTime >= chapter.end) {
     video.pause();
     if (video.currentTime > chapter.end + 0.5) {
@@ -97,14 +108,62 @@ function checkVideoTime() {
 }
 
 video.addEventListener("timeupdate", checkVideoTime);
+video.addEventListener("ended", function () {
+  if (currentChapter === chapters.length - 1) {
+    unlockPlate();
+  }
+});
 
-nextButton.addEventListener("click", function () {
+plate.addEventListener("mousedown", function (event) {
+  event.preventDefault();
   if (!isUnlocked) {
     return;
   }
-  if (currentChapter < chapters.length - 1) {
-    startChapter(currentChapter + 1, true);
-  }
+  isDragging = true;
+  plate.classList.add("dragging");
+  const plateBox = plate.getBoundingClientRect();
+  grabX = event.clientX - plateBox.left;
+  grabY = event.clientY - plateBox.top;
 });
+
+document.addEventListener("mousemove", function (event) {
+  if (!isDragging) {
+    return;
+  }
+  const stairsBox = stairs.getBoundingClientRect();
+  const windowLeft = event.clientX - grabX;
+  const windowTop = event.clientY - grabY;
+  plate.style.left = (windowLeft - stairsBox.left) + "px";
+  plate.style.top = (windowTop - stairsBox.top) + "px";
+});
+
+document.addEventListener("mouseup", function () {
+  if (!isDragging) {
+    return;
+  }
+  isDragging = false;
+  plate.classList.remove("dragging");
+
+  // No bin yet — only a next step (if there is one) is a valid target
+  if (currentChapter < chapters.length - 1) {
+    const target = steps[currentChapter + 1];
+    if (isPlateOverTarget(target)) {
+      startChapter(currentChapter + 1, true);
+      return;
+    }
+  }
+  placePlateOnStep(currentChapter);
+});
+
+function isPlateOverTarget(target) {
+  const plateBox = plate.getBoundingClientRect();
+  const targetBox = target.getBoundingClientRect();
+  const extra = 30;
+  const overlapsSideToSide = plateBox.right > (targetBox.left - extra) &&
+                              plateBox.left < (targetBox.right + extra);
+  const overlapsTopToBottom = plateBox.bottom > (targetBox.top - extra) &&
+                               plateBox.top < (targetBox.bottom + extra);
+  return overlapsSideToSide && overlapsTopToBottom;
+}
 
 startChapter(0, false);

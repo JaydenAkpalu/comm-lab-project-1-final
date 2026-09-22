@@ -19,15 +19,13 @@
   </nav>
 
   <div class="film-intro">
-    <p>Testing chapter locking with a temporary Next button (drag comes in the next step).</p>
+    <p>Real dragging is in now. Mood shift and the bin ending come in the next step.</p>
   </div>
 
   <div class="video-box">
     <video id="film" src="../assets/film.mp4" controls preload="auto"></video>
     <p id="chapter-label" class="chapter-label">Chapter I: Chosen</p>
     <p id="instructions" class="instructions">Press play to watch the first chapter.</p>
-    <!-- Temporary: real dragging replaces this button in the next step -->
-    <button id="next-btn" style="margin-top: 10px;">Next chapter (temporary)</button>
   </div>
 
   <div id="stairs" class="stairs">
@@ -38,8 +36,8 @@
     <div class="step" id="step-4"></div>
     <div class="step" id="step-5"></div>
 
-    <img id="bin" class="bin" src="../assets/bin.jpg" alt="The general waste bin at D2">
-    <img id="plate" class="plate" src="../assets/plate.png" alt="A plate of food">
+    <img id="bin" class="bin" src="../assets/bin.jpg" alt="The general waste bin at D2" draggable="false">
+    <img id="plate" class="plate" src="../assets/plate.png" alt="A plate of food" draggable="false">
   </div>
 
   <script src="../script.js"></script>
