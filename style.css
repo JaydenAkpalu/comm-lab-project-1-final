@@ -1,0 +1,9 @@
+/* Step 1: no real styling yet. Just enough to read the page. */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+}
+
+.navbar a {
+  margin-right: 16px;
+}
