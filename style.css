@@ -1,9 +1,332 @@
-/* Step 1: no real styling yet. Just enough to read the page. */
+/* =========================================================
+   Colors (all taken from our film):
+   tray red     #7c2a2e   the red trays at D2
+   chocolate    #3a2216   the chocolate sauce (used for text)
+   pistachio    #edeecd   the pistachio sauce (starting background)
+   mango        #e59a3c   the mango pieces
+   steel        #c2c8cd   the steel trash bin (ending background)
+   ========================================================= */
+
+
+/* ---------- Basic page setup ---------- */
 body {
-  font-family: Arial, sans-serif;
   margin: 0;
+  font-family: "Work Sans", Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+  color: #3a2216;
+  background-color: #edeecd;
+}
+
+/* Headings use the handwritten font, like the caption in our film */
+h1, h2 {
+  font-family: "Patrick Hand", "Comic Sans MS", cursive;
+  font-weight: normal;
+}
+
+h1 {
+  font-size: 44px;
+}
+
+h2 {
+  font-size: 32px;
+}
+
+
+/* ---------- Navbar ---------- */
+.navbar {
+  background-color: #7c2a2e;
+  padding: 14px 30px;
+  position: relative;
+  z-index: 20;
 }
 
 .navbar a {
-  margin-right: 16px;
+  color: #edeecd;
+  text-decoration: none;
+  margin-right: 28px;
+  font-size: 17px;
+}
+
+.navbar a:hover {
+  text-decoration: underline;
+}
+
+/* The page you are on is marked with a mango underline */
+.navbar a.current {
+  border-bottom: 3px solid #e59a3c;
+  padding-bottom: 3px;
+}
+
+
+/* ---------- Button (used on home and ending screen) ---------- */
+.button {
+  display: inline-block;
+  background-color: #e59a3c;
+  color: #3a2216;
+  font-family: "Work Sans", Arial, sans-serif;
+  font-size: 17px;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 12px 28px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #edeecd;
+}
+
+
+/* ---------- Home page ---------- */
+.hero {
+  background-image: url("assets/hero.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 85vh;
+}
+
+/* A see-through dark layer on top of the photo so the white text is readable */
+.hero-dark-layer {
+  background-color: rgba(30, 18, 12, 0.55);
+  height: 100%;
+  text-align: center;
+  padding-top: 22vh;
+  box-sizing: border-box;
+}
+
+.hero-title {
+  color: white;
+  font-size: 80px;
+  margin: 0;
+}
+
+.hero-tagline {
+  color: white;
+  font-size: 20px;
+  font-style: italic;
+  margin-bottom: 36px;
+}
+
+.synopsis {
+  max-width: 620px;
+  margin: 50px auto;
+  padding: 0 24px;
+}
+
+
+/* ---------- Film page ---------- */
+
+/* The background slowly changes color as the plate moves down (see script.js) */
+.film-page {
+  transition: background-color 2s;
+}
+
+/* Ready screen: covers the page until the visitor presses Begin. */
+.intro {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(20, 14, 12, 0.94);
+  text-align: center;
+  padding-top: 28vh;
+  box-sizing: border-box;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 1s;
+  z-index: 10;
+}
+
+.intro h1 {
+  color: white;
+  font-size: 56px;
+  margin: 0 0 20px 0;
+}
+
+.intro-rules {
+  color: white;
+  font-size: 18px;
+  margin-bottom: 34px;
+}
+
+/* Added by script.js once the visitor presses Begin */
+.intro.hide {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.video-box {
+  text-align: center;
+  margin: 10px auto 0 auto;
+  max-width: 760px;
+  padding: 0 20px;
+}
+
+.video-box video {
+  width: 100%;
+  background-color: black;
+}
+
+.chapter-label {
+  font-family: "Patrick Hand", "Comic Sans MS", cursive;
+  font-size: 32px;
+  margin: 10px 0 0 0;
+}
+
+.instructions {
+  font-size: 17px;
+  font-weight: 500;
+  color: #7c2a2e;
+  margin-top: 6px;
+}
+
+/* The staircase area. Steps and the plate are placed inside it with left/top. */
+.stairs {
+  position: relative;
+  width: 880px;
+  height: 560px;
+  margin: 20px auto 60px auto;
+}
+
+/* Each step looks like a block of stairs */
+.step {
+  position: absolute;
+  width: 140px;
+  height: 34px;
+  background-color: #d9d3bd;
+  border-bottom: 10px solid #b3aa8f;
+  font-family: "Patrick Hand", "Comic Sans MS", cursive;
+  font-size: 20px;
+  text-align: center;
+  line-height: 34px;
+  transition: opacity 1s;
+}
+
+/* Where each step sits: every step is lower and further right than the last one */
+#step-0 { left: 20px;  top: 90px;  }
+#step-1 { left: 140px; top: 160px; }
+#step-2 { left: 260px; top: 230px; }
+#step-3 { left: 380px; top: 300px; }
+#step-4 { left: 500px; top: 370px; }
+#step-5 { left: 620px; top: 440px; }
+
+/* Step the plate has already left */
+.step.done {
+  opacity: 0.45;
+}
+
+/* Step the plate is on right now */
+.step.current {
+  background-color: #7c2a2e;
+  border-bottom-color: #4f1a1d;
+  color: #edeecd;
+}
+
+/* The trash bin at the bottom of the stairs */
+.bin {
+  position: absolute;
+  left: 770px;
+  top: 420px;
+  width: 110px;
+  border-radius: 6px;
+}
+
+/* The plate the visitor drags */
+.plate {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  cursor: not-allowed;
+  transition: left 0.4s, top 0.4s, transform 0.8s, opacity 0.8s;
+}
+
+/* When the chapter is over, the plate glows so the visitor knows they can move it */
+.plate.unlocked {
+  cursor: grab;
+  animation: glow 1.4s infinite;
+}
+
+@keyframes glow {
+  0%   { box-shadow: 0 0 0 0 rgba(229, 154, 60, 0.9); }
+  100% { box-shadow: 0 0 0 16px rgba(229, 154, 60, 0); }
+}
+
+/* While dragging, turn the transition off so the plate follows the mouse exactly */
+.plate.dragging {
+  cursor: grabbing;
+  transition: none;
+  animation: none;
+}
+
+/* The plate shrinks and disappears into the bin */
+.plate.thrown-away {
+  transform: scale(0.1);
+  opacity: 0;
+}
+
+/* The ending screen covers everything, but stays invisible until the end */
+.ending {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(20, 14, 12, 0.94);
+  text-align: center;
+  padding-top: 30vh;
+  box-sizing: border-box;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 2s;
+}
+
+.ending.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.ending-caption {
+  font-family: "Patrick Hand", "Comic Sans MS", cursive;
+  font-size: 56px;
+  line-height: 1.2;
+  color: white;
+  margin-bottom: 40px;
+}
+
+
+/* ---------- Team page ---------- */
+.team {
+  text-align: center;
+  margin-top: 40px;
+}
+
+/* inline-block puts the three members next to each other */
+.member {
+  display: inline-block;
+  margin: 20px 30px;
+}
+
+.member img {
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 5px solid #7c2a2e;
+}
+
+.member p {
+  font-family: "Patrick Hand", "Comic Sans MS", cursive;
+  font-size: 26px;
+  margin: 8px 0 0 0;
+}
+
+.credits {
+  max-width: 620px;
+  margin: 40px auto 60px auto;
+  padding: 0 24px;
+  text-align: center;
 }

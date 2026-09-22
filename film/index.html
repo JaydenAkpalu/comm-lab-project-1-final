@@ -2,17 +2,45 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Film | POV: You're D2 Food</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Work+Sans:wght@400;500&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="../style.css">
 </head>
-<body>
+<body class="film-page">
+
   <nav class="navbar">
     <a href="../">Home</a>
     <a href="./" class="current">Film</a>
     <a href="../team/">Team</a>
   </nav>
 
-  <h1>Film</h1>
-  <p>The interactive staircase will go here.</p>
+  <div class="film-intro">
+    <p>Staircase layout preview. Not interactive yet.</p>
+  </div>
+
+  <!-- Plain video tag for now, full native controls, no chapter locking yet -->
+  <div class="video-box">
+    <video src="../assets/film.mp4" controls preload="auto"></video>
+    <p id="chapter-label" class="chapter-label">Chapter I: Chosen</p>
+  </div>
+
+  <!-- Static staircase. The plate's position is hardcoded here for now. -->
+  <div id="stairs" class="stairs">
+    <div class="step" style="left:20px; top:90px;">I</div>
+    <div class="step" style="left:140px; top:160px;">II</div>
+    <div class="step" style="left:260px; top:230px;">III</div>
+    <div class="step" style="left:380px; top:300px;">IV</div>
+    <div class="step" style="left:500px; top:370px;">V</div>
+    <div class="step" style="left:620px; top:440px;">VI</div>
+
+    <img id="bin" class="bin" src="../assets/bin.jpg" alt="The general waste bin at D2">
+    <img id="plate" class="plate" src="../assets/plate.png" alt="A plate of food"
+         style="left: 50px; top: 12px;">
+  </div>
+
 </body>
 </html>
